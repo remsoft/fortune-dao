@@ -4,5 +4,5 @@ import com.rem.fortune.model.CustomerSupplier;
 
 public interface SupplierDao {
 	public CustomerSupplier getSupplierById(String id);
-	public String createSupplier(CustomerSupplier custSupp);
+	public int createSupplier(CustomerSupplier custSupp);
 }

@@ -1,10 +1,16 @@
 package com.rem.fortune.dao.impl;
 
+import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.UUID;
+import java.sql.Statement;
+import java.util.Calendar;
 
+import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,7 +29,7 @@ public class SupplierDaoImpl extends FortuneDao implements SupplierDao{
 		@Override
 		public CustomerSupplier mapRow(ResultSet rs, int rowNum) throws SQLException {
 			CustomerSupplier cs = new CustomerSupplier();
-			cs.setId(rs.getString("id"));
+			cs.setId(rs.getInt("id"));
 			cs.setName(rs.getString("name"));
 			cs.setEmail(rs.getString("email"));
 			return cs;
@@ -32,13 +38,42 @@ public class SupplierDaoImpl extends FortuneDao implements SupplierDao{
 
 	@Override
 	@Transactional
-	public String createSupplier(CustomerSupplier custSupp) {
-		custSupp.getAddress().setId(UUID.randomUUID().toString());		
-		jdbcTemplate.update(DaoConstant.INSERT_ADDRESS, new Object[] {custSupp.getAddress().getId(),custSupp.getAddress().getState(),custSupp.getAddress().getCity(),
-				custSupp.getAddress().getState(),custSupp.getAddress().getZip(),custSupp.getAddress().getCountry(),custSupp.getAddress().getAttention()});
-		custSupp.setId(UUID.randomUUID().toString());
-		jdbcTemplate.update(DaoConstant.INSERT_CUSTOMER_SUPPLIER, new Object[] {custSupp.getId(),custSupp.getName(),custSupp.getPhone(),custSupp.getEmail(),custSupp.getAddress().getId(),custSupp.getIsCustomer()});
-		return null;
+	public int createSupplier(CustomerSupplier custSupp) {
+		KeyHolder keyHolder = new GeneratedKeyHolder();
+		 
+		int save = getJdbcTemplate().update(new PreparedStatementCreator(){
+		    public java.sql.PreparedStatement createPreparedStatement(
+		        java.sql.Connection connection) throws SQLException {
+		            PreparedStatement ps =(PreparedStatement) connection.prepareStatement(DaoConstant.INSERT_ADDRESS, Statement.RETURN_GENERATED_KEYS);
+		            ps.setString(1, custSupp.getAddress().getStreet());
+		            ps.setString(2, custSupp.getAddress().getCity());
+		            ps.setString(3, custSupp.getAddress().getState());
+		            ps.setString(4, custSupp.getAddress().getZip());
+		            ps.setString(5, custSupp.getAddress().getCountry());
+		            ps.setString(6, custSupp.getAddress().getAttention());
+		            ps.setString(7, "Riz");
+		            ps.setString(8, "Riz");
+		            return ps;
+		        }
+		    },keyHolder);
+			
+			save = getJdbcTemplate().update(new PreparedStatementCreator(){
+			    public java.sql.PreparedStatement createPreparedStatement(
+			        java.sql.Connection connection) throws SQLException {
+			            PreparedStatement ps =(PreparedStatement) connection.prepareStatement(DaoConstant.INSERT_CUSTOMER_SUPPLIER, Statement.RETURN_GENERATED_KEYS);
+			            ps.setString(1, custSupp.getName());
+			            ps.setString(2, custSupp.getPhone());
+			            ps.setString(3, custSupp.getEmail());
+			            ps.setInt(4, keyHolder.getKey().intValue());
+			            ps.setInt(5, custSupp.getIsCustomer());
+			            ps.setString(6, "Riz");
+			            ps.setString(7, "Riz");
+
+			            return ps;
+			        }
+			    },keyHolder);
+		
+		return save;
 	}
 
 }

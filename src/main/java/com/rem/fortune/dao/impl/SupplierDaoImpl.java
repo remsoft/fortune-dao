@@ -68,7 +68,6 @@ public class SupplierDaoImpl extends FortuneDao implements SupplierDao{
 			            ps.setInt(5, custSupp.getIsCustomer());
 			            ps.setString(6, "Riz");
 			            ps.setString(7, "Riz");
-
 			            return ps;
 			        }
 			    },keyHolder);

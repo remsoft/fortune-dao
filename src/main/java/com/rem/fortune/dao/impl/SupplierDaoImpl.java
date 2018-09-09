@@ -2,9 +2,11 @@ package com.rem.fortune.dao.impl;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.UUID;
 
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.rem.fortune.dao.SupplierDao;
 import com.rem.fortune.model.CustomerSupplier;
@@ -13,12 +15,11 @@ import com.rem.fortune.model.CustomerSupplier;
 public class SupplierDaoImpl extends FortuneDao implements SupplierDao{
 
 	@Override
-	public CustomerSupplier getCustomerSupportById(String id) {
-		System.out.println("----------------> ID:"+id);
-		return jdbcTemplate.queryForObject(DaoConstant.SELECT_CUST_SUPPORT_BY_ID, new Object[] {id}, new CustomerSupportRowMapper());
+	public CustomerSupplier getSupplierById(String id) {
+		return jdbcTemplate.queryForObject(DaoConstant.SELECT_CUST_SUPPLIER_BY_ID, new Object[] {id}, new SupplierRowMapper());
 	}
 	
-	private static class CustomerSupportRowMapper  implements RowMapper<CustomerSupplier> {
+	private static class SupplierRowMapper  implements RowMapper<CustomerSupplier> {
 		@Override
 		public CustomerSupplier mapRow(ResultSet rs, int rowNum) throws SQLException {
 			CustomerSupplier cs = new CustomerSupplier();
@@ -27,6 +28,17 @@ public class SupplierDaoImpl extends FortuneDao implements SupplierDao{
 			cs.setEmail(rs.getString("email"));
 			return cs;
 		}		
+	}
+
+	@Override
+	@Transactional
+	public String createSupplier(CustomerSupplier custSupp) {
+		custSupp.getAddress().setId(UUID.randomUUID().toString());		
+		jdbcTemplate.update(DaoConstant.INSERT_ADDRESS, new Object[] {custSupp.getAddress().getId(),custSupp.getAddress().getState(),custSupp.getAddress().getCity(),
+				custSupp.getAddress().getState(),custSupp.getAddress().getZip(),custSupp.getAddress().getCountry(),custSupp.getAddress().getAttention()});
+		custSupp.setId(UUID.randomUUID().toString());
+		jdbcTemplate.update(DaoConstant.INSERT_CUSTOMER_SUPPLIER, new Object[] {custSupp.getId(),custSupp.getName(),custSupp.getPhone(),custSupp.getEmail(),custSupp.getAddress().getId(),custSupp.getIsCustomer()});
+		return null;
 	}
 
 }

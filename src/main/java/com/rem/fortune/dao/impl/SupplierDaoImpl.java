@@ -1,11 +1,11 @@
 package com.rem.fortune.dao.impl;
 
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Calendar;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
@@ -15,6 +15,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.rem.fortune.dao.SupplierDao;
+import com.rem.fortune.model.Address;
 import com.rem.fortune.model.CustomerSupplier;
 
 @Repository("SupplierDao")
@@ -73,6 +74,38 @@ public class SupplierDaoImpl extends FortuneDao implements SupplierDao{
 			    },keyHolder);
 		
 		return save;
+	}
+
+	@Override
+	public List<CustomerSupplier> getCustomerSupplierAll(int isCustomer) {
+		List<CustomerSupplier> results = new ArrayList<CustomerSupplier>();
+		PreparedStatement ps;
+		try {
+			ps = getJdbcTemplate().getDataSource().getConnection().prepareStatement(DaoConstant.SELECT_CUST_SUPPLIER);
+			ps.setInt(1, isCustomer);
+			ResultSet rs = ps.executeQuery();
+			while ( rs.next() )
+		    {
+				CustomerSupplier cs = new CustomerSupplier();
+				cs.setId(rs.getInt("id"));
+				cs.setEmail(rs.getString("email"));
+				cs.setPhone(rs.getString("phone"));
+				cs.setName(rs.getString("name"));
+				cs.setIsCustomer(0);
+				Address address = new Address();
+				address.setCity(rs.getString("city"));
+				address.setStreet(rs.getString("street"));
+				address.setState(rs.getString("state"));
+				cs.setAddress(address);
+				results.add(cs);				
+		    }
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	    
+		    
+		return results;
 	}
 
 }

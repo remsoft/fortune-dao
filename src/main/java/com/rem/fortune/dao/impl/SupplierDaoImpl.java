@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
@@ -79,33 +80,25 @@ public class SupplierDaoImpl extends FortuneDao implements SupplierDao{
 	@Override
 	public List<CustomerSupplier> getCustomerSupplierAll(int isCustomer) {
 		List<CustomerSupplier> results = new ArrayList<CustomerSupplier>();
-		PreparedStatement ps;
-		try {
-			ps = getJdbcTemplate().getDataSource().getConnection().prepareStatement(DaoConstant.SELECT_CUST_SUPPLIER);
-			ps.setInt(1, isCustomer);
-			ResultSet rs = ps.executeQuery();
-			while ( rs.next() )
-		    {
-				CustomerSupplier cs = new CustomerSupplier();
-				cs.setId(rs.getInt("id"));
-				cs.setEmail(rs.getString("email"));
-				cs.setPhone(rs.getString("phone"));
-				cs.setName(rs.getString("name"));
-				cs.setIsCustomer(0);
-				Address address = new Address();
-				address.setCity(rs.getString("city"));
-				address.setStreet(rs.getString("street"));
-				address.setState(rs.getString("state"));
-				cs.setAddress(address);
-				results.add(cs);				
-		    }
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
+		List<Map<String, Object>> resultSet = jdbcTemplate.queryForList(DaoConstant.SELECT_CUST_SUPPLIER, new Object[] {0});
+		for(Map<String,Object> map :resultSet) {
+			CustomerSupplier cs = new CustomerSupplier();
+			cs.setId((int) map.get("id"));
+			cs.setEmail((String) map.get("email"));
+			cs.setPhone((String)map.get("phone"));
+			cs.setName((String)map.get("name"));
+			cs.setIsCustomer(0);
+			Address address = new Address();
+			address.setCity((String)map.get("city"));
+			address.setStreet((String)map.get("street"));
+			address.setState((String)map.get("state"));
+			cs.setAddress(address);
+			results.add(cs);		
 		}
-	    
 		    
 		return results;
 	}
+	
+
 
 }

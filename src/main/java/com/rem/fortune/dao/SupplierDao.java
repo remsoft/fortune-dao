@@ -5,7 +5,8 @@ import java.util.List;
 import com.rem.fortune.model.CustomerSupplier;
 
 public interface SupplierDao {
-	public CustomerSupplier getSupplierById(String id);
-	public int createSupplier(CustomerSupplier custSupp);
-	public List<CustomerSupplier> getCustomerSupplierAll(int isCustomer);
+	public CustomerSupplier getById(int id);
+	public int create(CustomerSupplier custSupp);
+	public List<CustomerSupplier> getAll(int isCustomer);
+	public int deleteById(int id);
 }

@@ -6,8 +6,9 @@ public class DaoConstant {
 			+ " VALUES (?,?,?,?,?,?,?,sysdate(),?,sysdate())";
 	public static String INSERT_CUSTOMER_SUPPLIER="INSERT INTO cust_supp(name,phone,email,address_id,is_customer,created_by,created_dt,modified_by,modified_dt)"
 			+ " VALUES (?,?,?,?,?,?,sysdate(),?,sysdate())";
-	public static String SELECT_CUST_SUPPLIER="SELECT cs.id,cs.name,cs.email,cs.phone,ad.street,ad.city,ad.state FROM fortuna.cust_supp cs inner join address ad\r\n" + 
-			"on cs.address_id= ad.id where cs.is_customer=?";
+	public static String SELECT_CUST_SUPPLIER="SELECT cs.id,cs.name,cs.email,cs.address_id,cs.is_customer,cs.phone,ad.street,ad.city,ad.state,ad.zip,ad.country,ad.attention FROM fortuna.cust_supp cs inner join address ad "
+			+ "on cs.address_id= ad.id where cs.is_customer=?";
+	public static String DELETE_CUST_SUPPLIER_BY_ID="DELETE FROM cust_supp WHERE id=?";
 	
 	
 }

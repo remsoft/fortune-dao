@@ -23,7 +23,7 @@ import com.rem.fortune.model.CustomerSupplier;
 public class SupplierDaoImpl extends FortuneDao implements SupplierDao{
 
 	@Override
-	public CustomerSupplier getSupplierById(String id) {
+	public CustomerSupplier getById(int id) {
 		return jdbcTemplate.queryForObject(DaoConstant.SELECT_CUST_SUPPLIER_BY_ID, new Object[] {id}, new SupplierRowMapper());
 	}
 	
@@ -40,7 +40,7 @@ public class SupplierDaoImpl extends FortuneDao implements SupplierDao{
 
 	@Override
 	@Transactional
-	public int createSupplier(CustomerSupplier custSupp) {
+	public int create(CustomerSupplier custSupp) {
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		 
 		int save = getJdbcTemplate().update(new PreparedStatementCreator(){
@@ -78,7 +78,7 @@ public class SupplierDaoImpl extends FortuneDao implements SupplierDao{
 	}
 
 	@Override
-	public List<CustomerSupplier> getCustomerSupplierAll(int isCustomer) {
+	public List<CustomerSupplier> getAll(int isCustomer) {
 		List<CustomerSupplier> results = new ArrayList<CustomerSupplier>();
 		List<Map<String, Object>> resultSet = jdbcTemplate.queryForList(DaoConstant.SELECT_CUST_SUPPLIER, new Object[] {0});
 		for(Map<String,Object> map :resultSet) {
@@ -89,14 +89,23 @@ public class SupplierDaoImpl extends FortuneDao implements SupplierDao{
 			cs.setName((String)map.get("name"));
 			cs.setIsCustomer(0);
 			Address address = new Address();
+			address.setId((int) map.get("address_id"));
 			address.setCity((String)map.get("city"));
 			address.setStreet((String)map.get("street"));
 			address.setState((String)map.get("state"));
+			address.setZip((String) map.get("zip"));
+			address.setCountry((String) map.get("country"));
+			address.setAttention((String) map.get("attention"));
 			cs.setAddress(address);
 			results.add(cs);		
 		}
 		    
 		return results;
+	}
+
+	@Override
+	public int deleteById(int id) {
+		return jdbcTemplate.update(DaoConstant.DELETE_CUST_SUPPLIER_BY_ID,new Object[] {id});
 	}
 	
 

@@ -21,4 +21,8 @@ public class DaoConstant {
 	public static String UPDATE_ORGANIZATION_BY_ID="UPDATE fortuna.organization" 
 			+ " SET display_name=?, logo=?, registration_number=?, description=?, address_id=?, modified_by=?, modified_dt=sysdate()" + 
 			"WHERE id=?";
+
+	public static String UPDATE_CUSTOMER_SUPPLIER="UPDATE cust_supp set name=?,phone=?,email=?,modified_by=?,modified_dt=sysdate() where id=?";
+	public static String UPDATE_ADDRESS="UPDATE address set street=?,city=?,state=?,zip=?,country=?,attention=?,modified_by=?,modified_dt=sysdate() where id=?";
+	
 }

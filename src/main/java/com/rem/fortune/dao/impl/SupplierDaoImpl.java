@@ -20,10 +20,10 @@ import com.rem.fortune.model.Address;
 import com.rem.fortune.model.CustomerSupplier;
 
 @Repository("SupplierDao")
-public class SupplierDaoImpl extends FortuneDao implements SupplierDao{
+public class SupplierDaoImpl extends FortuneDao implements SupplierDao{ 
 
 	@Override
-	public CustomerSupplier getById(int id) {
+	public CustomerSupplier getById(int id)  throws Exception {
 		return jdbcTemplate.queryForObject(DaoConstant.SELECT_CUST_SUPPLIER_BY_ID, new Object[] {id}, new SupplierRowMapper());
 	}
 	
@@ -40,7 +40,7 @@ public class SupplierDaoImpl extends FortuneDao implements SupplierDao{
 
 	@Override
 	@Transactional
-	public int create(CustomerSupplier custSupp) {
+	public int create(CustomerSupplier custSupp)  throws Exception {
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		 
 		int save = getJdbcTemplate().update(new PreparedStatementCreator(){
@@ -78,7 +78,7 @@ public class SupplierDaoImpl extends FortuneDao implements SupplierDao{
 	}
 
 	@Override
-	public List<CustomerSupplier> getAll(int isCustomer) {
+	public List<CustomerSupplier> getAll(int isCustomer)  throws Exception{
 		List<CustomerSupplier> results = new ArrayList<CustomerSupplier>();
 		List<Map<String, Object>> resultSet = jdbcTemplate.queryForList(DaoConstant.SELECT_CUST_SUPPLIER, new Object[] {0});
 		for(Map<String,Object> map :resultSet) {
@@ -104,10 +104,69 @@ public class SupplierDaoImpl extends FortuneDao implements SupplierDao{
 	}
 
 	@Override
-	public int deleteById(int id) {
+	public int deleteById(int id)  throws Exception{
 		return jdbcTemplate.update(DaoConstant.DELETE_CUST_SUPPLIER_BY_ID,new Object[] {id});
 	}
-	
 
+	@Override
+	public int updateById(CustomerSupplier custSupp)  throws Exception{
+		int save = getJdbcTemplate().update(new PreparedStatementCreator(){
+			    public java.sql.PreparedStatement createPreparedStatement(
+			        java.sql.Connection connection) throws SQLException {
+			            PreparedStatement ps =(PreparedStatement) connection.prepareStatement(DaoConstant.UPDATE_CUSTOMER_SUPPLIER);
+			            ps.setString(1, custSupp.getName());
+			            ps.setString(2, custSupp.getPhone());
+			            ps.setString(3, custSupp.getEmail());
+			            ps.setString(4, "Riz");
+			            ps.setInt(5, custSupp.getId());
+			            return ps;
+			        }
+			    });		
+			return save;
+	}
+
+	@Override
+	public int updateAddressById(CustomerSupplier custSupp) {
+		Address address = custSupp.getAddress();
+		if(address.getId()!=0) {				
+			int save = getJdbcTemplate().update(new PreparedStatementCreator(){
+			    public java.sql.PreparedStatement createPreparedStatement(
+			        java.sql.Connection connection) throws SQLException {
+			            PreparedStatement ps =(PreparedStatement) connection.prepareStatement(DaoConstant.UPDATE_ADDRESS);
+			            ps.setString(1, address.getStreet());
+			            ps.setString(2, address.getCity());
+			            ps.setString(3, address.getState());
+			            ps.setString(4, address.getZip());
+			            ps.setString(5, address.getCountry());
+			            ps.setString(6, address.getAttention());
+			            ps.setString(7, "Riz");
+			            ps.setInt(8, address.getId());
+			            return ps;
+			        }
+			    });
+			return save;
+			
+		
+		}else {
+			KeyHolder keyHolder = new GeneratedKeyHolder();			 
+			int save = getJdbcTemplate().update(new PreparedStatementCreator(){
+			    public java.sql.PreparedStatement createPreparedStatement(
+			        java.sql.Connection connection) throws SQLException {
+			            PreparedStatement ps =(PreparedStatement) connection.prepareStatement(DaoConstant.INSERT_ADDRESS, Statement.RETURN_GENERATED_KEYS);
+			            ps.setString(1, address.getStreet());
+			            ps.setString(2, address.getCity());
+			            ps.setString(3, address.getState());
+			            ps.setString(4, address.getZip());
+			            ps.setString(5, address.getCountry());
+			            ps.setString(6, address.getAttention());
+			            ps.setString(7, "Riz");
+			            ps.setString(8, "Riz");
+			            return ps;
+			        }
+			    },keyHolder);
+				return save;
+		}
+	}
+	
 
 }

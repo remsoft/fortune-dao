@@ -3,7 +3,7 @@ package com.rem.fortune.dao.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-public class FortuneDao {	
+public abstract class FortuneDao {	
 	@Autowired
 	JdbcTemplate jdbcTemplate;
 

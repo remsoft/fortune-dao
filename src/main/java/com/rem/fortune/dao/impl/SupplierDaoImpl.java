@@ -23,7 +23,7 @@ import com.rem.fortune.model.CustomerSupplier;
 public class SupplierDaoImpl extends FortuneDao implements SupplierDao{ 
 
 	@Override
-	public CustomerSupplier getById(int id)  throws Exception {
+	public CustomerSupplier getById(int id){
 		return jdbcTemplate.queryForObject(DaoConstant.SELECT_CUST_SUPPLIER_BY_ID, new Object[] {id}, new SupplierRowMapper());
 	}
 	
@@ -40,7 +40,7 @@ public class SupplierDaoImpl extends FortuneDao implements SupplierDao{
 
 	@Override
 	@Transactional
-	public int create(CustomerSupplier custSupp)  throws Exception {
+	public int create(CustomerSupplier custSupp){
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		 
 		int save = getJdbcTemplate().update(new PreparedStatementCreator(){
@@ -78,7 +78,7 @@ public class SupplierDaoImpl extends FortuneDao implements SupplierDao{
 	}
 
 	@Override
-	public List<CustomerSupplier> getAll(int isCustomer)  throws Exception{
+	public List<CustomerSupplier> getAll(int isCustomer){
 		List<CustomerSupplier> results = new ArrayList<CustomerSupplier>();
 		List<Map<String, Object>> resultSet = jdbcTemplate.queryForList(DaoConstant.SELECT_CUST_SUPPLIER, new Object[] {0});
 		for(Map<String,Object> map :resultSet) {
@@ -104,12 +104,12 @@ public class SupplierDaoImpl extends FortuneDao implements SupplierDao{
 	}
 
 	@Override
-	public int deleteById(int id)  throws Exception{
+	public int deleteById(int id){
 		return jdbcTemplate.update(DaoConstant.DELETE_CUST_SUPPLIER_BY_ID,new Object[] {id});
 	}
 
 	@Override
-	public int updateById(CustomerSupplier custSupp)  throws Exception{
+	public int updateById(CustomerSupplier custSupp){
 		int save = getJdbcTemplate().update(new PreparedStatementCreator(){
 			    public java.sql.PreparedStatement createPreparedStatement(
 			        java.sql.Connection connection) throws SQLException {

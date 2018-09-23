@@ -11,4 +11,5 @@ public interface SupplierDao {
 	public int deleteById(int id);
 	public int updateById(CustomerSupplier custSupp);
 	public int updateAddressById(CustomerSupplier custSupp);
+	public List<CustomerSupplier> getAllForDropDown();
 }

@@ -25,7 +25,25 @@ public class DaoConstant {
 
 	public static String UPDATE_CUSTOMER_SUPPLIER="UPDATE cust_supp set name=?,phone=?,email=?,modified_by=?,modified_dt=sysdate() where id=?";
 	public static String UPDATE_ADDRESS="UPDATE address set street=?,city=?,state=?,zip=?,country=?,attention=?,modified_by=?,modified_dt=sysdate() where id=?";
-	/* Query for coa tbale */
-	public static String SELECT_COA="SELECT id,l1,l2,l3,l4,l5,coa_code,name,description,favorite,created_by,created_dt,modified_by,modified_dt FROM coa";
+	
+	/* Query for coa table */
+	public static String SELECT_COA_BY_ACCOUNT_TYPE="SELECT c.id,c.l1,c.l2,c.l3,c.l4,c.l5,c.coa_code,c.name as coa_name,c.description,c.favorite,ac.name as acc_typ_name,acc.name as acc_grp_name " + 
+			"FROM coa c inner join account_type ac " + 
+			"on c.l1 = ac.id " + 
+			"inner join account_classification acc " + 
+			"on ac.classification_id = acc.id "+
+			"where acc.id = ?";
+	
+	public static String SELECT_COA_ALL="SELECT c.id,c.l1,c.l2,c.l3,c.l4,c.l5,c.coa_code,c.name as coa_name,c.description,c.favorite,ac.name as acc_typ_name,acc.name as acc_grp_name " + 
+			"FROM coa c inner join account_type ac " + 
+			"on c.l1 = ac.id " + 
+			"inner join account_classification acc " + 
+			"on ac.classification_id = acc.id ";
+
+	public static String SELECT_ACC_TYPE_DROP_DOWN="SELECT id, name FROM account_type";
+	public static String SELECT_BRANCH_DROP_DOWN="SELECT id, name FROM branch";
+	public static String SELECT_CUST_SUPP_DROP_DOWN="SELECT id, name FROM cust_supp";
+	public static String SELECT_DIVISION_DROP_DOWN="SELECT id, name FROM division";
+	public static String SELECT_COA_CUSTOM_LEVELN1_DROP_DOWN="SELECT id,name FROM custom_level";
 	
 }

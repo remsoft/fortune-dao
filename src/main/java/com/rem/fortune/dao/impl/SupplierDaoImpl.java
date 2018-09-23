@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.rem.fortune.dao.SupplierDao;
 import com.rem.fortune.model.Address;
+import com.rem.fortune.model.Branch;
 import com.rem.fortune.model.CustomerSupplier;
 
 @Repository("SupplierDao")
@@ -166,5 +167,18 @@ public class SupplierDaoImpl extends FortuneDao implements SupplierDao{
 			    },keyHolder);
 				return save;
 		}
+	}
+
+	@Override
+	public List<CustomerSupplier> getAllForDropDown() {
+		List<CustomerSupplier> custSupps = new ArrayList<CustomerSupplier>();
+		List<Map<String, Object>> resultSet = jdbcTemplate.queryForList(DaoConstant.SELECT_CUST_SUPP_DROP_DOWN);
+		for(Map<String,Object> map :resultSet) {
+			CustomerSupplier cs = new CustomerSupplier();
+			cs.setId((int) map.get("id"));
+			cs.setName((String) map.get("name"));
+			custSupps.add(cs);
+		}
+		return custSupps;
 	}	
 }

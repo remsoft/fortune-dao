@@ -10,6 +10,19 @@ public class DaoConstant {
 	public static String SELECT_CUST_SUPPLIER="SELECT cs.id,cs.name,cs.email,cs.address_id,cs.is_customer,cs.phone,ad.street,ad.city,ad.state,ad.zip,ad.country,ad.attention FROM fortuna.cust_supp cs inner join address ad "
 			+ "on cs.address_id= ad.id where cs.is_customer=?";
 	public static String DELETE_CUST_SUPPLIER_BY_ID="DELETE FROM cust_supp WHERE id=?";
+	
+	// QUERY CONSTANT ORGANIZATION
+	public static String INSERT_ORGANIZATION= "INSERT INTO organization (display_name, logo, registration_number, description, address_id, created_by, created_dt, modified_by, modified_dt)"
+			+" VALUES(?,?,?,?, ?,?,sysdate(),?,sysdate())";
+	public static String DELETE_ORGANIZATION_BY_ID="DELETE FROM organization WHERE id=?";
+	public static String SELECT_ORGANIZATION="SELECT og.id, og.display_name, og.logo, og.registration_number, og.description,  ad.street, ad.city, ad.state, ad.zip"
+			+" FROM organization og JOIN address ad ON og.address_id = ad.id;";
+	public static String SELECT_ORGANIZATION_BY_ID="SELECT og.id, og.display_name, og.logo, og.registration_number, og.description,  ad.street, ad.city, ad.state, ad.zip"
+			+" FROM organization og JOIN address ad ON og.address_id = ad.id where og.id=?";
+	public static String UPDATE_ORGANIZATION_BY_ID="UPDATE fortuna.organization" 
+			+ " SET display_name=?, logo=?, registration_number=?, description=?, address_id=?, modified_by=?, modified_dt=sysdate()" + 
+			"WHERE id=?";
+
 	public static String UPDATE_CUSTOMER_SUPPLIER="UPDATE cust_supp set name=?,phone=?,email=?,modified_by=?,modified_dt=sysdate() where id=?";
 	public static String UPDATE_ADDRESS="UPDATE address set street=?,city=?,state=?,zip=?,country=?,attention=?,modified_by=?,modified_dt=sysdate() where id=?";
 	/* Query for coa tbale */

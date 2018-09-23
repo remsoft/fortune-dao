@@ -20,10 +20,14 @@ import com.rem.fortune.model.Address;
 import com.rem.fortune.model.CustomerSupplier;
 
 @Repository("SupplierDao")
-public class SupplierDaoImpl extends FortuneDao implements SupplierDao{ 
+public class SupplierDaoImpl extends FortuneDao implements SupplierDao{
 
 	@Override
+<<<<<<< HEAD
 	public CustomerSupplier getById(int id){
+=======
+	public CustomerSupplier getById(int id) {
+>>>>>>> 9d60f52f0151516b065c9b870a5769cb1dd06f1c
 		return jdbcTemplate.queryForObject(DaoConstant.SELECT_CUST_SUPPLIER_BY_ID, new Object[] {id}, new SupplierRowMapper());
 	}
 	
@@ -40,7 +44,11 @@ public class SupplierDaoImpl extends FortuneDao implements SupplierDao{
 
 	@Override
 	@Transactional
+<<<<<<< HEAD
 	public int create(CustomerSupplier custSupp){
+=======
+	public int create(CustomerSupplier custSupp) {
+>>>>>>> 9d60f52f0151516b065c9b870a5769cb1dd06f1c
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		 
 		int save = getJdbcTemplate().update(new PreparedStatementCreator(){
@@ -78,7 +86,11 @@ public class SupplierDaoImpl extends FortuneDao implements SupplierDao{
 	}
 
 	@Override
+<<<<<<< HEAD
 	public List<CustomerSupplier> getAll(int isCustomer){
+=======
+	public List<CustomerSupplier> getAll(int isCustomer) {
+>>>>>>> 9d60f52f0151516b065c9b870a5769cb1dd06f1c
 		List<CustomerSupplier> results = new ArrayList<CustomerSupplier>();
 		List<Map<String, Object>> resultSet = jdbcTemplate.queryForList(DaoConstant.SELECT_CUST_SUPPLIER, new Object[] {0});
 		for(Map<String,Object> map :resultSet) {
@@ -104,6 +116,7 @@ public class SupplierDaoImpl extends FortuneDao implements SupplierDao{
 	}
 
 	@Override
+<<<<<<< HEAD
 	public int deleteById(int id){
 		return jdbcTemplate.update(DaoConstant.DELETE_CUST_SUPPLIER_BY_ID,new Object[] {id});
 	}
@@ -167,6 +180,12 @@ public class SupplierDaoImpl extends FortuneDao implements SupplierDao{
 				return save;
 		}
 	}
+=======
+	public int deleteById(int id) {
+		return jdbcTemplate.update(DaoConstant.DELETE_CUST_SUPPLIER_BY_ID,new Object[] {id});
+	}
+>>>>>>> 9d60f52f0151516b065c9b870a5769cb1dd06f1c
 	
+
 
 }

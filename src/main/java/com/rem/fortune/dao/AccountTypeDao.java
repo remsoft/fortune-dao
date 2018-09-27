@@ -2,9 +2,9 @@ package com.rem.fortune.dao;
 
 import java.util.List;
 
-import com.rem.fortune.model.AccountType;
+import com.rem.fortune.model.DropDownModel;
 
 public interface AccountTypeDao {
-	public List<AccountType> getAllForDropDown();
+	public List<DropDownModel> getAllForDropDown();
 
 }

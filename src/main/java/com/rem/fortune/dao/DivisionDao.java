@@ -2,8 +2,8 @@ package com.rem.fortune.dao;
 
 import java.util.List;
 
-import com.rem.fortune.model.Division;
+import com.rem.fortune.model.DropDownModel;
 
 public interface DivisionDao {
-	public List<Division> getAllForDropDown();
+	public List<DropDownModel> getAllForDropDown();
 }

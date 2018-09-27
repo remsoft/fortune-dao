@@ -7,17 +7,17 @@ import java.util.Map;
 import org.springframework.stereotype.Repository;
 
 import com.rem.fortune.dao.AccountTypeDao;
-import com.rem.fortune.model.AccountType;
+import com.rem.fortune.model.DropDownModel;
 
 @Repository("AccountTypeDao")
 public class AccountTypeDaoImpl extends FortuneDao implements AccountTypeDao{
 
 	@Override
-	public List<AccountType> getAllForDropDown() {
-		List<AccountType> accountTypes = new ArrayList<AccountType>();
+	public List<DropDownModel> getAllForDropDown() {
+		List<DropDownModel> accountTypes = new ArrayList<DropDownModel>();
 		List<Map<String, Object>> resultSet = jdbcTemplate.queryForList(DaoConstant.SELECT_ACC_TYPE_DROP_DOWN);
 		for(Map<String,Object> map :resultSet) {
-			AccountType ac = new AccountType();
+			DropDownModel ac = new DropDownModel();
 			ac.setId((int) map.get("id"));
 			ac.setName((String) map.get("name"));
 			accountTypes.add(ac);

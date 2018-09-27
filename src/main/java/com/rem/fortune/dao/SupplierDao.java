@@ -3,6 +3,7 @@ package com.rem.fortune.dao;
 import java.util.List;
 
 import com.rem.fortune.model.CustomerSupplier;
+import com.rem.fortune.model.DropDownModel;
 
 public interface SupplierDao {
 	public CustomerSupplier getById(int id); 
@@ -11,5 +12,5 @@ public interface SupplierDao {
 	public int deleteById(int id);
 	public int updateById(CustomerSupplier custSupp);
 	public int updateAddressById(CustomerSupplier custSupp);
-	public List<CustomerSupplier> getAllForDropDown();
+	public List<DropDownModel> getAllForDropDown();
 }

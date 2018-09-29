@@ -106,7 +106,14 @@ public class SupplierDaoImpl extends FortuneDao implements SupplierDao{
 
 	@Override
 	public int deleteById(int id){
-		return jdbcTemplate.update(DaoConstant.DELETE_CUST_SUPPLIER_BY_ID,new Object[] {id});
+		int size =0;
+		try{
+			size= jdbcTemplate.update(DaoConstant.DELETE_CUST_SUPPLIER_BY_ID,new Object[] {id});			
+		}catch(Exception e){
+			System.out.println(e.getMessage());
+		}
+		return size;
+
 	}
 
 	@Override

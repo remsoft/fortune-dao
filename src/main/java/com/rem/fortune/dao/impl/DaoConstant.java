@@ -45,8 +45,13 @@ public class DaoConstant {
 	public static String SELECT_BRANCH_DROP_DOWN="SELECT id, name FROM branch";
 	public static String SELECT_CUST_SUPP_DROP_DOWN="SELECT id, name FROM cust_supp";
 	public static String SELECT_DIVISION_DROP_DOWN="SELECT id, name FROM division";
+	public static String SELECT_TAX_DROP_DOWN="SELECT id,name from tax";
 	public static String SELECT_COA_CUSTOM_LEVELN1_DROP_DOWN="SELECT id,name FROM custom_level";
-	public static String INSERT_COA="INSERT INTO coa (l1,l2,l3,l4,l5,coa_code,name,description,favorite,created_by,created_dt,modified_by,modified_dt ) VALUES (?,?,?,?,?,?,?,?,?,?,sysdate(),?,sysdate())";
+	public static String INSERT_COA="INSERT INTO coa (l1,l2,l3,l4,l5,tax_id,coa_code,name,description,favorite,created_by,created_dt,modified_by,modified_dt ) "
+			+ "VALUES (?,?,?,?,?,?,?,?,?,?,?,sysdate(),?,sysdate())";
 	public static String UPDATE_COA="UPDATE coa SET l1=?,l2=?,l3=?,l4=?,l5=?,coa_code=?,name=?,description=?,favorite=?,modified_by=?,modified_dt=sysdate() where id=?";
 	public static String DELETE_COA="DELETE FROM coa where id=?";
+	
+	
+
 }

@@ -58,12 +58,15 @@ public class CoaDaoImpl extends FortuneDao implements CoaDao{
 	            ps.setInt(2, coa.getL2Branch());
 	            ps.setInt(3, coa.getL3CustSupp());
 	            ps.setInt(4, coa.getL4Division());
-	            ps.setInt(5, coa.getL5Custom());
-	            ps.setString(6, coa.getCoaCd());
-	            ps.setString(7, coa.getName());
-	            ps.setString(8, coa.getDescription());
-	            ps.setString(9, coa.getFavorite());
-	            ps.setString(10,"Rizky");
+	            // temporarily default to 1 
+	            // ps.setInt(5, coa.getL5Custom());
+	            ps.setInt(5, 1);
+	            ps.setInt(6, coa.getTax());
+	            ps.setString(7, coa.getCoaCd());
+	            ps.setString(8, coa.getName());
+	            ps.setString(9, coa.getDescription());
+	            ps.setString(10, coa.getFavorite());
+	            ps.setString(11,"Rizky");
 	            ps.setString(12,"Rizky");
 				return ps;
 			}
